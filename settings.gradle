@@ -1,0 +1,4 @@
+rootProject.name = 'warehouse'
+include 'warehouse_api'
+include 'warehouse_app'
+
