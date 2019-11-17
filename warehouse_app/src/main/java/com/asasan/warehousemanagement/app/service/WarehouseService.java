@@ -8,9 +8,9 @@ import java.util.List;
 public interface WarehouseService {
     List<ItemDto> getItems();
 
-    ItemDto getItemById(long Id);
+    ItemDto getItemById(int itemId);
 
     ItemDto createItem(ItemCreationDto itemCreationDto);
 
-    ItemDto changeItemAmount(long id, long amount);
+    ItemDto changeItemAmount(int id, int amount);
 }

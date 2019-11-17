@@ -5,12 +5,14 @@ import com.asasan.warehousemanagement.api.dto.ItemDto;
 import com.asasan.warehousemanagement.app.entity.Item;
 import com.asasan.warehousemanagement.app.repository.ItemRepository;
 import com.asasan.warehousemanagement.app.service.WarehouseService;
+import com.asasan.warehousemanagement.app.stream.Streams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class WarehouseServiceImpl implements WarehouseService {
@@ -25,12 +27,18 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public List<ItemDto> getItems() {
-        return null;
+        return Streams
+                .of(itemRepository.findAll())
+                .map(Item::toItemDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public ItemDto getItemById(long Id) {
-        return null;
+    public ItemDto getItemById(int itemId) {
+        logger.info("Looking for an item by id {}", itemId);
+        Item foundItem = itemRepository.findById(itemId)
+                .orElseThrow(() -> new IllegalArgumentException("There is no such order in database"));
+        return foundItem.toItemDto();
     }
 
     @Override
@@ -41,7 +49,11 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
-    public ItemDto changeItemAmount(long id, long amount) {
-        return null;
+    public ItemDto changeItemAmount(int id, int amount) {
+        Item item = itemRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("There is no such order in database"));
+        item.setAmount(item.getAmount() + amount);
+        itemRepository.save(item);
+        return item.toItemDto();
     }
 }

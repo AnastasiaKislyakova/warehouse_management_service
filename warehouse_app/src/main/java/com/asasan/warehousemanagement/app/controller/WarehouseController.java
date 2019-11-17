@@ -6,15 +6,10 @@ import com.asasan.warehousemanagement.app.service.WarehouseService;
 import com.asasan.warehousemanagement.app.service.impl.WarehouseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("warehouse")
@@ -29,6 +24,21 @@ public class WarehouseController {
     @PostMapping
     ItemDto createItem(@RequestBody ItemCreationDto itemCreationDto) {
         return warehouseService.createItem(itemCreationDto);
+    }
+
+    @GetMapping(value = "{itemId}")
+    ItemDto getItemById(@PathVariable Integer itemId) {
+        return warehouseService.getItemById(itemId);
+    }
+
+    @GetMapping
+    List<ItemDto> getItems() {
+        return warehouseService.getItems();
+    }
+
+    @PutMapping(value = "{itemId}/amount/{amount}")
+    ItemDto changeItemAmount(@PathVariable Integer itemId, @PathVariable Integer amount) {
+        return warehouseService.changeItemAmount(itemId, amount);
     }
 
 }

@@ -5,6 +5,7 @@ import com.asasan.warehousemanagement.api.dto.ItemDto;
 import com.asasan.warehousemanagement.api.dto.ItemCreationDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -31,8 +32,8 @@ public interface WarehouseManagementServiceClient extends WarehouseManagementSer
     /**
      * {@inheritDoc}
      */
-    @GetMapping(value="{id}")
-    ItemDto getItemById(long Id);
+    @GetMapping(value="{itemId}")
+    ItemDto getItemById(@PathVariable int itemId);
 
     /**
      * {@inheritDoc}
@@ -43,7 +44,7 @@ public interface WarehouseManagementServiceClient extends WarehouseManagementSer
     /**
      * {@inheritDoc}
      */
-    @PutMapping(value="items/{id}/addition/{amount}")
-    ItemDto changeItemAmount(long id, long amount);
+    @PutMapping(value="{itemId}/amount/{amount}")
+    ItemDto changeItemAmount(@PathVariable int itemId, @PathVariable int amount);
 
 }
