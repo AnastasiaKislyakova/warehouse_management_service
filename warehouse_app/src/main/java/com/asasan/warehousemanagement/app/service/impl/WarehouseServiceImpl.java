@@ -5,7 +5,7 @@ import com.asasan.warehousemanagement.api.dto.ItemDto;
 import com.asasan.warehousemanagement.app.entity.Item;
 import com.asasan.warehousemanagement.app.repository.ItemRepository;
 import com.asasan.warehousemanagement.app.service.WarehouseService;
-import com.asasan.warehousemanagement.app.stream.Streams;
+import com.asasan.warehousemanagement.app.util.Streams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,31 +1,30 @@
 plugins {
-    id 'org.springframework.boot'
-    id 'io.spring.dependency-management'
     id 'java-library'
+    id 'maven-publish'
+    id 'io.spring.dependency-management'
 }
 
+group = 'com.asasan.warehousemanagement'
 version = apiVersion
 
-bootJar {
-    enabled = false
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.asasan.warehousemanagement'
+            artifactId = 'warehousemanagement-api'
+
+            from components.java
+        }
+    }
 }
 
 dependencies {
     compile group: 'org.springframework.cloud', name: 'spring-cloud-openfeign-core', version: '2.1.3.RELEASE'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok:1.18.4'
+    annotationProcessor 'org.projectlombok:lombok:1.18.4'
     compile group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.9'
 
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
-
-uploadArchives {
-    repositories {
-        mavenLocal()
-    }
-}
-
-

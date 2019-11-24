@@ -1,4 +1,4 @@
-package com.asasan.warehousemanagement.app.stream;
+package com.asasan.warehousemanagement.app.util;
 
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;

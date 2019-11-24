@@ -6,8 +6,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 
 @Getter
 @Setter

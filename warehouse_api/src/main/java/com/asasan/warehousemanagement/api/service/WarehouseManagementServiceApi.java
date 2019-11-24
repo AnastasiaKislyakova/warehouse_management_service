@@ -18,7 +18,7 @@ public interface WarehouseManagementServiceApi {
     /**
      * Returns item by id
      */
-    ItemDto getItemById(long Id);
+    ItemDto getItemById(int Id);
 
     /**
      * Returns created item with its id
@@ -28,6 +28,6 @@ public interface WarehouseManagementServiceApi {
     /**
      * Changes amount of item by id
      */
-    ItemDto changeItemAmount(long id, long amount);
+    ItemDto changeItemAmount(int id, int amount);
 
 }
