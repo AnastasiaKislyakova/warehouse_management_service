@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("warehouse")
+@RequestMapping("api/warehouse")
 public class WarehouseController {
     private WarehouseService warehouseService;
 
