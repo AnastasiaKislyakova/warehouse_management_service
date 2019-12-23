@@ -3,6 +3,8 @@ package com.asasan.warehousemanagement.api.feign;
 import com.asasan.warehousemanagement.api.service.WarehouseManagementServiceApi;
 import com.asasan.warehousemanagement.api.dto.ItemDto;
 import com.asasan.warehousemanagement.api.dto.ItemCreationDto;
+import feign.Param;
+import feign.RequestLine;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,31 +22,31 @@ import java.util.List;
  * for Ribbon load balancing client and Eureka discovery service to understand
  * the name of the service the request should be redirected to.
  */
-@FeignClient(name = "${warehouse.management.service.name}/warehouse")
+//@FeignClient(name = "${warehouse.management.service.name}/warehouse")
 public interface WarehouseManagementServiceClient extends WarehouseManagementServiceApi {
 
     /**
      * {@inheritDoc}
      */
-    @GetMapping
+    @RequestLine("GET /")
     List<ItemDto> getItems();
 
     /**
      * {@inheritDoc}
      */
-    @GetMapping(value="{itemId}")
-    ItemDto getItemById(@PathVariable int itemId);
+    @RequestLine("GET /{itemId}")
+    ItemDto getItemById(@Param("itemId") int itemId);
 
     /**
      * {@inheritDoc}
      */
-    @PostMapping
+    @RequestLine("POST /")
     ItemDto createItem(ItemCreationDto itemCreationDto);
 
     /**
      * {@inheritDoc}
      */
-    @PutMapping(value="{itemId}/amount/{amount}")
-    ItemDto changeItemAmount(@PathVariable int itemId, @PathVariable int amount);
+    @RequestLine("PUT /{itemId}/amount/{amount}")
+    ItemDto changeItemAmount(@Param("itemId") int itemId, @Param("amount") int amount);
 
 }

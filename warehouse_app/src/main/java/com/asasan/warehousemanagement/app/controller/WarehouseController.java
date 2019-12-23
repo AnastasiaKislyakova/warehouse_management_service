@@ -6,6 +6,7 @@ import com.asasan.warehousemanagement.app.service.WarehouseService;
 import com.asasan.warehousemanagement.app.service.impl.WarehouseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,8 +28,13 @@ public class WarehouseController {
     }
 
     @GetMapping(value = "{itemId}")
-    ItemDto getItemById(@PathVariable Integer itemId) {
-        return warehouseService.getItemById(itemId);
+    ResponseEntity<ItemDto> getItemById(@PathVariable Integer itemId) {
+        ItemDto itemById = warehouseService.getItemById(itemId);
+        if (itemById == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(itemById);
+
     }
 
     @GetMapping
@@ -37,8 +43,12 @@ public class WarehouseController {
     }
 
     @PutMapping(value = "{itemId}/amount/{amount}")
-    ItemDto changeItemAmount(@PathVariable Integer itemId, @PathVariable Integer amount) {
-        return warehouseService.changeItemAmount(itemId, amount);
+    ResponseEntity<ItemDto> changeItemAmount(@PathVariable Integer itemId, @PathVariable Integer amount) {
+        ItemDto item = warehouseService.changeItemAmount(itemId, amount);
+        if (item == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(item);
     }
 
 }

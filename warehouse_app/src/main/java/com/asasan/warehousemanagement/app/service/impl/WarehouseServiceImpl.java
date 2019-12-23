@@ -36,9 +36,9 @@ public class WarehouseServiceImpl implements WarehouseService {
     @Override
     public ItemDto getItemById(int itemId) {
         logger.info("Looking for an item by id {}", itemId);
-        Item foundItem = itemRepository.findById(itemId)
-                .orElseThrow(() -> new IllegalArgumentException("There is no such order in database"));
-        return foundItem.toItemDto();
+        return itemRepository.findById(itemId)
+                .map(Item::toItemDto)
+                .orElse(null);
     }
 
     @Override
@@ -50,10 +50,12 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public ItemDto changeItemAmount(int id, int amount) {
-        Item item = itemRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("There is no such order in database"));
-        item.setAmount(item.getAmount() + amount);
-        itemRepository.save(item);
-        return item.toItemDto();
+        return itemRepository
+                .findById(id)
+                .map((it) -> {
+                    it.setAmount(it.getAmount() + amount);
+                    itemRepository.save(it);
+                    return it.toItemDto();
+                }).orElse(null);
     }
 }
